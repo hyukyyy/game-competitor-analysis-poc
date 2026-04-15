@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"gh auth status 2>&1 | head -10 && echo \\\"---\\\" && gh repo view hyukyyy/game-competitor-analysis-poc --json name,isEmpty,visibility 2>&1\",\"description\":\"Check gh auth and whether target rep...",
+  "error": "Exit code 1\ngithub.com\n  ✓ Logged in to github.com account donghyuk-yoon (keyring)\n  - Active account: true\n  - Git operations protocol: https\n  - Token: gho_************************************\n  - Token scopes: 'gist', 'read:org', 'repo'\n\n  ✓ Logged in to github.com account hyukyyy (keyring)\n  - Active account: false\n  - Git operations protocol: https\n---\nGraphQL: Could not resolve to a Repository with the name 'hyukyyy/game-competitor-analysis-poc'. (repository)",
+  "timestamp": "2026-04-15T09:48:31.660Z",
+  "retry_count": 1
+}
