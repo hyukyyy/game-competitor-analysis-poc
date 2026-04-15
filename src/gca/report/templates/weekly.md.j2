@@ -1,0 +1,46 @@
+# Weekly Competitor Report — {{ base_game.title }}
+**Week of {{ week_of }}** | Generated at {{ generated_at }}
+
+---
+
+## Top {{ top_n | length }} Competitors
+
+| Rank | Title | Platform | Score | Semantic | Genre | Tier | BM |
+|------|-------|----------|-------|----------|-------|------|----|
+{% for entry in top_n -%}
+| {{ loop.index }} | **{{ entry.title }}** | {{ entry.platform }} | {{ "%.3f" | format(entry.similarity_score) }} | {{ "%.2f" | format(entry.components.semantic) }} | {{ "%.2f" | format(entry.components.genre) }} | {{ "%.2f" | format(entry.components.tier) }} | {{ "%.2f" | format(entry.components.bm) }} |
+{% endfor %}
+
+---
+
+## New Entrants This Week
+{% if new_entrants %}
+{% for entry in new_entrants -%}
+- **{{ entry.title }}** ({{ entry.platform }}) — score {{ "%.3f" | format(entry.similarity_score) }}
+{% endfor %}
+{% else %}
+_No new entrants this week._
+{% endif %}
+
+---
+
+## Rank Changes vs Last Week
+{% if rank_changes %}
+| Title | Last Week | This Week | Δ |
+|-------|-----------|-----------|---|
+{% for ch in rank_changes -%}
+| {{ ch.title }} | #{{ ch.prev_rank }} | #{{ ch.curr_rank }} | {{ "%+d" | format(ch.prev_rank - ch.curr_rank) }} |
+{% endfor %}
+{% else %}
+_No significant rank changes._
+{% endif %}
+
+---
+
+## Notable Updates Summary
+{{ updates_summary }}
+
+---
+
+_Scores: semantic=description cosine · genre=genre embedding cosine · tier=review-count proximity · bm=business-model KL similarity_
+_Weights: semantic={{ "%.2f" | format(weights.semantic) }} · genre={{ "%.2f" | format(weights.genre) }} · tier={{ "%.2f" | format(weights.tier) }} · bm={{ "%.2f" | format(weights.bm) }}_

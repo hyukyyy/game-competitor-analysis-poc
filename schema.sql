@@ -155,3 +155,32 @@ CREATE TABLE IF NOT EXISTS weekly_reports (
     generated_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UNIQUE (week_of, base_game_id)
 );
+
+-- ============================================================
+-- Weight history (튜닝된 가중치 이력)
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS weight_history (
+    id              BIGSERIAL PRIMARY KEY,
+    week_of         DATE NOT NULL,
+    weights         JSONB NOT NULL,             -- {semantic, genre, tier, bm}
+    ndcg_score      FLOAT,                      -- NDCG@10 on gold set
+    label_count     INT,                        -- 학습에 사용된 라벨 수
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_weight_history_week
+    ON weight_history (week_of DESC);
+
+-- ============================================================
+-- Weak similarities (플랫폼 "similar games" signal)
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS weak_similarities (
+    base_game_id    INT NOT NULL REFERENCES games(id) ON DELETE CASCADE,
+    target_game_id  INT NOT NULL REFERENCES games(id) ON DELETE CASCADE,
+    source          VARCHAR(32) NOT NULL,        -- steam_morelike / playstore_similar / tag_overlap
+    collected_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (base_game_id, target_game_id, source)
+);
+CREATE INDEX IF NOT EXISTS idx_weak_similarities_base
+    ON weak_similarities (base_game_id);

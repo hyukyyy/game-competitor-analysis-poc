@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(where docker:*)",
+      "Bash(powershell -Command \"Get-Command docker -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source\")",
+      "Bash(powershell -Command \"& { $docker = Get-Command docker -ErrorAction SilentlyContinue; if \\($docker\\) { $docker.Source } else { ''not found'' }; ls ''C:\\\\Program Files\\\\Docker\\\\Docker\\\\resources\\\\bin\\\\docker.exe'' -ErrorAction SilentlyContinue }\")",
+      "Read(//c/Program Files/Docker/Docker/resources/**)",
+      "Read(//c/Program Files/**)",
+      "Read(//c/Users/USER/AppData/Local/**)",
+      "Read(//c/Program Files \\(x86\\)/**)"
+    ]
+  }
+}

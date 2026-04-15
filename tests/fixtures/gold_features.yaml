@@ -1,0 +1,309 @@
+# Gold set for feature quality evaluation
+# PM-labeled expected features for 20 well-known games.
+# Used by: gca feature-quality
+#
+# Fields validated:
+#   genre, subgenre, bm_dist.dominant_key (highest-value BM key)
+#
+# How to extend: add entries following the same schema.
+# reviews: paste 3-5 representative review snippets (first 200 chars each).
+
+- game_id: 0          # placeholder — matched by title at runtime
+  title: "Counter-Strike 2"
+  description: >
+    Counter-Strike 2 is a free-to-play tactical first-person shooter.
+    Teams of terrorists and counter-terrorists compete across various game modes.
+  reviews:
+    - "Best FPS game ever made, requires real skill and teamwork."
+    - "Matchmaking is rough but the core gameplay is unmatched."
+    - "Great competitive shooter, very steep learning curve."
+  expected:
+    genre: "Action"
+    subgenre: "Tactical Shooter"
+    bm_dist_dominant: "premium"   # free-to-play but cosmetics
+    play_style_contains: "competitive"
+
+- game_id: 0
+  title: "Dota 2"
+  description: >
+    Dota 2 is a multiplayer online battle arena game where two teams of five
+    players compete to destroy the opposing team's Ancient.
+  reviews:
+    - "Most complex game I've ever played, incredibly rewarding."
+    - "Steep learning curve but the depth is incredible."
+    - "Best MOBA in existence if you can handle the learning curve."
+  expected:
+    genre: "Strategy"
+    subgenre: "MOBA"
+    bm_dist_dominant: "premium"
+    play_style_contains: "competitive"
+
+- game_id: 0
+  title: "Palworld"
+  description: >
+    Palworld is an open-world survival crafting game where players collect
+    and battle creatures called Pals. Build bases, explore, and fight.
+  reviews:
+    - "Pokemon with guns! Incredibly fun survival game."
+    - "Amazing creature collection and base building mechanics."
+    - "Addictive survival game with great creature designs."
+  expected:
+    genre: "Action"
+    subgenre: "Survival"
+    bm_dist_dominant: "premium"
+    play_style_contains: "casual"
+
+- game_id: 0
+  title: "Stardew Valley"
+  description: >
+    Stardew Valley is a farming simulation RPG where you build a farm,
+    befriend villagers, explore mines, and enjoy rural life.
+  reviews:
+    - "Most relaxing game I've ever played. Pure joy."
+    - "Perfect cozy game for unwinding after work."
+    - "Incredible depth for a farming simulator."
+  expected:
+    genre: "RPG"
+    subgenre: "Farming Simulation"
+    bm_dist_dominant: "premium"
+    play_style_contains: "casual"
+
+- game_id: 0
+  title: "Apex Legends"
+  description: >
+    Apex Legends is a free-to-play battle royale hero shooter.
+    Players form squads and compete to be the last team standing.
+  reviews:
+    - "Best movement system in any battle royale game."
+    - "Incredible gunplay and character abilities."
+    - "Fun with friends, frustrating solo."
+  expected:
+    genre: "Action"
+    subgenre: "Battle Royale"
+    bm_dist_dominant: "gacha"
+    play_style_contains: "competitive"
+
+- game_id: 0
+  title: "Hades"
+  description: >
+    Hades is a rogue-like dungeon crawler where you play as Zagreus,
+    son of Hades, fighting your way out of the Underworld.
+  reviews:
+    - "Best roguelite ever made. Exceptional writing and gameplay."
+    - "Every run feels fresh. Incredible replayability."
+    - "Perfect blend of story and roguelite mechanics."
+  expected:
+    genre: "Action"
+    subgenre: "Roguelite"
+    bm_dist_dominant: "premium"
+    play_style_contains: "casual"
+
+- game_id: 0
+  title: "Civilization VI"
+  description: >
+    Sid Meier's Civilization VI is a turn-based strategy game where you
+    build an empire from the ancient era to the modern age.
+  reviews:
+    - "Just one more turn... every single time."
+    - "Deep strategy with incredible replayability."
+    - "Best Civ game yet. So many ways to win."
+  expected:
+    genre: "Strategy"
+    subgenre: "Turn-Based Strategy"
+    bm_dist_dominant: "premium"
+    play_style_contains: "casual"
+
+- game_id: 0
+  title: "Minecraft"
+  description: >
+    Minecraft is a sandbox survival game where players mine resources,
+    craft items, and build structures in a blocky procedural world.
+  reviews:
+    - "Infinite creativity. Best game ever made for imagination."
+    - "Perfect for all ages. My kids and I play together."
+    - "Timeless sandbox that never gets old."
+  expected:
+    genre: "Simulation"
+    subgenre: "Sandbox"
+    bm_dist_dominant: "premium"
+    play_style_contains: "casual"
+
+- game_id: 0
+  title: "Elden Ring"
+  description: >
+    Elden Ring is an action RPG set in the Lands Between, a fantasy realm
+    created by George R.R. Martin and Hidetaka Miyazaki.
+  reviews:
+    - "Masterpiece. Best open world game ever created."
+    - "Brutally hard but incredibly rewarding."
+    - "FromSoftware at their absolute peak."
+  expected:
+    genre: "RPG"
+    subgenre: "Action RPG"
+    bm_dist_dominant: "premium"
+    play_style_contains: "casual"
+
+- game_id: 0
+  title: "League of Legends"
+  description: >
+    League of Legends is a team-based MOBA where two teams of five champions
+    compete to destroy the enemy Nexus.
+  reviews:
+    - "Incredibly addictive competitive game."
+    - "Toxic community but the gameplay is unmatched."
+    - "Best MOBA for competitive play."
+  expected:
+    genre: "Strategy"
+    subgenre: "MOBA"
+    bm_dist_dominant: "gacha"
+    play_style_contains: "competitive"
+
+- game_id: 0
+  title: "Terraria"
+  description: >
+    Terraria is a 2D action-adventure sandbox game with exploration, building,
+    crafting, and boss battles in a procedurally generated world.
+  reviews:
+    - "More content than games 10x its price."
+    - "Amazing 2D sandbox with incredible depth."
+    - "Best value game on Steam, hundreds of hours of content."
+  expected:
+    genre: "Action"
+    subgenre: "Sandbox"
+    bm_dist_dominant: "premium"
+    play_style_contains: "casual"
+
+- game_id: 0
+  title: "Rust"
+  description: >
+    Rust is a multiplayer survival game where players gather resources,
+    build bases, and fight to survive against other players and the environment.
+  reviews:
+    - "Most brutal survival game. Incredibly addictive."
+    - "Intense PvP survival. Not for the faint of heart."
+    - "Grind-heavy but super rewarding when it clicks."
+  expected:
+    genre: "Action"
+    subgenre: "Survival"
+    bm_dist_dominant: "premium"
+    play_style_contains: "competitive"
+
+- game_id: 0
+  title: "Among Us"
+  description: >
+    Among Us is a multiplayer social deduction game where crewmates complete
+    tasks while impostors try to eliminate them without being caught.
+  reviews:
+    - "So much fun with friends. Perfect party game."
+    - "Simple but incredibly fun social deduction."
+    - "Best party game of 2020."
+  expected:
+    genre: "Strategy"
+    subgenre: "Social Deduction"
+    bm_dist_dominant: "premium"
+    play_style_contains: "casual"
+
+- game_id: 0
+  title: "The Witcher 3: Wild Hunt"
+  description: >
+    The Witcher 3 is an open-world action RPG following Geralt of Rivia
+    on a quest to find his adopted daughter across a war-torn fantasy world.
+  reviews:
+    - "Best RPG ever made. Incredible story and world."
+    - "Masterpiece of storytelling and open-world design."
+    - "Every side quest feels like a main story quest."
+  expected:
+    genre: "RPG"
+    subgenre: "Action RPG"
+    bm_dist_dominant: "premium"
+    play_style_contains: "casual"
+
+- game_id: 0
+  title: "Dead by Daylight"
+  description: >
+    Dead by Daylight is an asymmetrical multiplayer horror game where one
+    player takes on the role of a killer and four others try to escape.
+  reviews:
+    - "Terrifying and fun. Best asymmetric horror game."
+    - "Love the asymmetric gameplay. Very tense."
+    - "Great with friends, frustrating solo survivor."
+  expected:
+    genre: "Action"
+    subgenre: "Asymmetric Horror"
+    bm_dist_dominant: "gacha"
+    play_style_contains: "competitive"
+
+- game_id: 0
+  title: "Hollow Knight"
+  description: >
+    Hollow Knight is a challenging 2D action-adventure in the vast underground
+    kingdom of Hallownest, featuring hand-drawn art and tight combat.
+  reviews:
+    - "Best metroidvania ever made. Incredible atmosphere."
+    - "Challenging but fair. Gorgeous art style."
+    - "Masterpiece of indie game design."
+  expected:
+    genre: "Action"
+    subgenre: "Metroidvania"
+    bm_dist_dominant: "premium"
+    play_style_contains: "casual"
+
+- game_id: 0
+  title: "Vampire Survivors"
+  description: >
+    Vampire Survivors is a Gothic horror casual roguelite where you survive
+    waves of enemies by evolving powerful weapons and passive items.
+  reviews:
+    - "Incredibly addictive. Can't stop playing."
+    - "Perfect game for just one more run syndrome."
+    - "Phenomenal value. Hours of fun for very little money."
+  expected:
+    genre: "Action"
+    subgenre: "Roguelite"
+    bm_dist_dominant: "premium"
+    play_style_contains: "casual"
+
+- game_id: 0
+  title: "Path of Exile"
+  description: >
+    Path of Exile is a free-to-play action RPG set in the dark fantasy world
+    of Wraeclast with an extremely deep character customization system.
+  reviews:
+    - "Best ARPG ever made. Incredible depth."
+    - "F2P done right. No pay-to-win."
+    - "Overwhelming at first but incredibly rewarding."
+  expected:
+    genre: "RPG"
+    subgenre: "Action RPG"
+    bm_dist_dominant: "premium"
+    play_style_contains: "casual"
+
+- game_id: 0
+  title: "Warframe"
+  description: >
+    Warframe is a free-to-play cooperative action RPG set in a sci-fi universe.
+    Players control members of the Tenno as they fight various factions.
+  reviews:
+    - "Most generous F2P game. Incredible content updates."
+    - "Great cooperative gameplay. Excellent movement system."
+    - "Best F2P game on the market."
+  expected:
+    genre: "Action"
+    subgenre: "Action RPG"
+    bm_dist_dominant: "premium"
+    play_style_contains: "co-op"
+
+- game_id: 0
+  title: "Fortnite"
+  description: >
+    Fortnite is a free-to-play battle royale game with building mechanics
+    where 100 players fight to be the last one standing.
+  reviews:
+    - "Fun battle royale with unique building mechanics."
+    - "Great for casual play. Kids love it."
+    - "Constant updates keep it fresh."
+  expected:
+    genre: "Action"
+    subgenre: "Battle Royale"
+    bm_dist_dominant: "gacha"
+    play_style_contains: "casual"
