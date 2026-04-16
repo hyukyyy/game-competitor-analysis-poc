@@ -101,7 +101,7 @@ def save_weak_labels(pairs: list[tuple[int, int]], source: str) -> int:
     with connect() as conn:
         for a, b in pairs:
             for base, target in ((a, b), (b, a)):
-                conn.execute(
+                result = conn.execute(
                     """
                     INSERT INTO weak_similarities (base_game_id, target_game_id, source)
                     VALUES (%s, %s, %s)
@@ -109,7 +109,7 @@ def save_weak_labels(pairs: list[tuple[int, int]], source: str) -> int:
                     """,
                     [base, target, source],
                 )
-                inserted += 1
+                inserted += result.rowcount
     return inserted
 
 
@@ -128,7 +128,6 @@ def collect_steam_weak_labels() -> int:
 
         # Resolve appids to game_ids
         with connect() as conn:
-            placeholders = ",".join(["%s"] * len(similar_appids))
             target_rows = conn.execute(
                 f"SELECT id FROM games WHERE platform = 'steam' AND external_id = ANY(%s)",
                 [similar_appids],

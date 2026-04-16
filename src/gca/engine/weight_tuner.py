@@ -140,7 +140,13 @@ def grid_search(n_steps: int = 5, k: int = 10) -> dict:
     review_counts = {}
     with connect() as conn:
         rows = conn.execute(
-            "SELECT game_id, COUNT(*) AS n FROM raw_reviews GROUP BY game_id"
+            """
+            SELECT g.id AS game_id, COUNT(rr.id) AS n
+            FROM games g
+            LEFT JOIN raw_reviews rr
+                ON rr.platform = g.platform AND rr.external_id = g.external_id
+            GROUP BY g.id
+            """
         ).fetchall()
         for r in rows:
             review_counts[r["game_id"]] = r["n"]

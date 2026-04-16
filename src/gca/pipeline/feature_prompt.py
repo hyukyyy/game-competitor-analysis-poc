@@ -28,7 +28,7 @@ Return a JSON object with these exact fields:
   "play_style": ["<e.g. competitive>", "<casual>", "<co-op>"],
   "session_length_minutes": <typical session length as a float>,
   "core_loop": "<1-2 sentence description of the core gameplay loop>",
-  "_canary_answer": "yes"
+  "_canary_answer": "<yes or no>"
 }}
 
 Rules:

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 
 import anthropic
 
@@ -41,6 +42,7 @@ def extract_features_for_game(
         messages=[{"role": "user", "content": prompt}],
     )
     raw = msg.content[0].text.strip()
+    raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw, flags=re.MULTILINE).strip()
 
     try:
         features = json.loads(raw)
