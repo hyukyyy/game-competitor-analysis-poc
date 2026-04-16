@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-16T05:36:03.042Z",
+  "updatedAt": "2026-04-16T07:36:59.354Z",
   "missions": [
     {
       "id": "session:56cb6530-cc4b-4b6e-9b80-fabe43fcfa28:none",
@@ -7,7 +7,7 @@
       "name": "none",
       "objective": "Session mission",
       "createdAt": "2026-04-15T23:02:12.262Z",
-      "updatedAt": "2026-04-16T05:36:03.042Z",
+      "updatedAt": "2026-04-16T07:36:59.354Z",
       "status": "done",
       "workerCount": 3,
       "taskCounts": {
@@ -27,7 +27,7 @@
           "currentStep": null,
           "latestUpdate": "completed",
           "completedSummary": null,
-          "updatedAt": "2026-04-16T05:36:03.042Z"
+          "updatedAt": "2026-04-16T07:36:59.354Z"
         },
         {
           "name": "Explore:abf14c8",
@@ -90,6 +90,38 @@
           "agent": "Explore:a70f027",
           "detail": "completed",
           "sourceKey": "session-stop:a01ab8dbb0e9a5787"
+        },
+        {
+          "id": "session-stop:aa454c38c8b904dd9:2026-04-16T06:26:57.793Z",
+          "at": "2026-04-16T06:26:57.793Z",
+          "kind": "completion",
+          "agent": "Explore:a70f027",
+          "detail": "completed",
+          "sourceKey": "session-stop:aa454c38c8b904dd9"
+        },
+        {
+          "id": "session-stop:a4f0684daf0dea5a8:2026-04-16T06:43:04.352Z",
+          "at": "2026-04-16T06:43:04.352Z",
+          "kind": "completion",
+          "agent": "Explore:a70f027",
+          "detail": "completed",
+          "sourceKey": "session-stop:a4f0684daf0dea5a8"
+        },
+        {
+          "id": "session-stop:a45defb2cad564f61:2026-04-16T07:20:22.247Z",
+          "at": "2026-04-16T07:20:22.247Z",
+          "kind": "completion",
+          "agent": "Explore:a70f027",
+          "detail": "completed",
+          "sourceKey": "session-stop:a45defb2cad564f61"
+        },
+        {
+          "id": "session-stop:a0f7c2a2438087782:2026-04-16T07:36:59.354Z",
+          "at": "2026-04-16T07:36:59.354Z",
+          "kind": "completion",
+          "agent": "Explore:a70f027",
+          "detail": "completed",
+          "sourceKey": "session-stop:a0f7c2a2438087782"
         }
       ]
     }

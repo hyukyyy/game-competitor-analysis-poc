@@ -1,7 +1,7 @@
 {
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\".venv/bin/python -m gca.cli migrate 2>&1\",\"description\":\"Run gca migrate to apply schema\"}",
-  "error": "Exit code 1\nTraceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/home/dyoon/codes/dyoon/game-competitor-analysis-poc/src/gca/cli.py\", line 21, in <module>\n    from .report import weekly as report_mod\n  File \"/home/dyoon/codes/dyoon/game-competitor-analysis-poc/src/gca/report/weekly.py\", line 8, in <module>\n    from jinja2 import Environment, FileSystemLoader\nModuleNotFoundError: No module named 'jinja...",
-  "timestamp": "2026-04-16T00:24:36.608Z",
+  "tool_name": "Read",
+  "tool_input_preview": "{\"file_path\":\"/home/dyoon/.claude/projects/-home-dyoon-codes-dyoon-game-competitor-analysis-poc/memory/MEMORY.md\"}",
+  "error": "File does not exist. Note: your current working directory is /home/dyoon/codes/dyoon/game-competitor-analysis-poc.",
+  "timestamp": "2026-04-16T07:45:41.370Z",
   "retry_count": 1
 }

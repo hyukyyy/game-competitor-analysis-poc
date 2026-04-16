@@ -223,6 +223,29 @@ def cmd_collect_appstore(args: argparse.Namespace) -> int:
                         """,
                         (game.platform, game.external_id, json.dumps(game.payload)),
                     )
+                if args.fetch_reviews:
+                    try:
+                        revs = c.fetch_reviews(ext_id, limit=args.review_limit)
+                        for r in revs:
+                            with conn.cursor() as cur:
+                                cur.execute(
+                                    """
+                                    INSERT INTO raw_reviews
+                                        (platform, external_id, review_id, text, rating, posted_at)
+                                    VALUES (%s, %s, %s, %s, %s, %s)
+                                    ON CONFLICT (platform, review_id) DO NOTHING
+                                    """,
+                                    (
+                                        r.platform,
+                                        r.external_id,
+                                        r.review_id,
+                                        r.text,
+                                        r.rating,
+                                        r.posted_at,
+                                    ),
+                                )
+                    except Exception as e:
+                        log.debug("reviews skip %s: %s", ext_id, e)
                 inserted += 1
             conn.commit()
         state["rows_out"] = inserted
@@ -371,6 +394,8 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--limit", type=int, default=200)
     sp.add_argument("--country", default="us")
     sp.add_argument("--week-of", default=None)
+    sp.add_argument("--fetch-reviews", action="store_true")
+    sp.add_argument("--review-limit", type=int, default=50)
     sp.set_defaults(func=cmd_collect_appstore)
 
     sp = sub.add_parser("collect:itch", help="Collect itch.io top games")
