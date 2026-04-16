@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from openai import OpenAI
+from sentence_transformers import SentenceTransformer
 
 from ..config import Settings
 from ..db import connect
@@ -10,15 +10,23 @@ from .cache import embedding_cache_get, embedding_cache_put
 log = get_logger(__name__)
 settings = Settings()
 
+_model: SentenceTransformer | None = None
+
+
+def _get_model() -> SentenceTransformer:
+    global _model
+    if _model is None:
+        log.info("loading embedding model %s", settings.embedding_model)
+        _model = SentenceTransformer(settings.embedding_model)
+    return _model
+
 
 def get_embedding(text: str) -> list[float]:
     cached = embedding_cache_get(text, settings.embedding_model)
     if cached is not None:
         return cached
 
-    client = OpenAI(api_key=settings.openai_api_key)
-    resp = client.embeddings.create(input=text, model=settings.embedding_model)
-    vec = resp.data[0].embedding
+    vec = _get_model().encode(text).tolist()
     embedding_cache_put(text, settings.embedding_model, vec)
     return vec
 

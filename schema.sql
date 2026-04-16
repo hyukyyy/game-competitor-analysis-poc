@@ -68,8 +68,8 @@ CREATE INDEX IF NOT EXISTS idx_game_features_current
 
 CREATE TABLE IF NOT EXISTS game_embeddings (
     game_id                 INT PRIMARY KEY REFERENCES games(id) ON DELETE CASCADE,
-    description_embedding   vector(1536),
-    review_embedding        vector(1536),
+    description_embedding   vector(384),
+    review_embedding        vector(384),
     updated_at              TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS llm_cache (
 CREATE TABLE IF NOT EXISTS embedding_cache (
     text_hash       VARCHAR(64) PRIMARY KEY,
     model           VARCHAR(64) NOT NULL,
-    embedding       vector(1536) NOT NULL,
+    embedding       vector(384) NOT NULL,
     created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 

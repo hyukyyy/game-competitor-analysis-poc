@@ -16,9 +16,8 @@ class Settings(BaseSettings):
         default="postgresql://postgres:postgres@localhost:5432/game_competitor"
     )
     anthropic_api_key: str | None = None
-    openai_api_key: str | None = None
     llm_model: str = "claude-sonnet-4-6"
-    embedding_model: str = "text-embedding-3-small"
+    embedding_model: str = "all-MiniLM-L6-v2"
     steam_api_key: str | None = None
     youtube_api_key: str | None = None
 

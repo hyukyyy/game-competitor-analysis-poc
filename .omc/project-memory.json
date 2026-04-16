@@ -1,0 +1,281 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1776293965734,
+  "projectRoot": "/home/dyoon/codes/dyoon/game-competitor-analysis-poc",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Python",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "pyproject.toml"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "fastapi",
+        "version": null,
+        "category": "backend"
+      },
+      {
+        "name": "pytest",
+        "version": null,
+        "category": "testing"
+      }
+    ],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": "pytest",
+    "lintCommand": "ruff check",
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "src",
+      "tests"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "__pycache__": {
+      "path": "__pycache__",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776293965729,
+      "keyFiles": [
+        "conftest.cpython-312-pytest-9.0.3.pyc"
+      ]
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 4,
+      "lastAccessed": 1776293965730,
+      "keyFiles": [
+        "conversation.md",
+        "implementation.md",
+        "plan-status.md",
+        "plan.md"
+      ]
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 0,
+      "lastAccessed": 1776293965731,
+      "keyFiles": []
+    },
+    "tests": {
+      "path": "tests",
+      "purpose": "Test files",
+      "fileCount": 2,
+      "lastAccessed": 1776293965731,
+      "keyFiles": [
+        "__init__.py",
+        "test_normalize.py"
+      ]
+    },
+    "tests/fixtures": {
+      "path": "tests/fixtures",
+      "purpose": "Test fixtures",
+      "fileCount": 1,
+      "lastAccessed": 1776293965732,
+      "keyFiles": [
+        "gold_features.yaml"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "",
+      "accessCount": 7,
+      "lastAccessed": 1776294137268,
+      "type": "directory"
+    },
+    {
+      "path": "schema.sql",
+      "accessCount": 6,
+      "lastAccessed": 1776317341666,
+      "type": "file"
+    },
+    {
+      "path": "docs/plan.md",
+      "accessCount": 4,
+      "lastAccessed": 1776295286661,
+      "type": "file"
+    },
+    {
+      "path": "pyproject.toml",
+      "accessCount": 4,
+      "lastAccessed": 1776314547180,
+      "type": "file"
+    },
+    {
+      "path": ".env.example",
+      "accessCount": 4,
+      "lastAccessed": 1776314573237,
+      "type": "file"
+    },
+    {
+      "path": "src/gca/cli.py",
+      "accessCount": 4,
+      "lastAccessed": 1776317327278,
+      "type": "file"
+    },
+    {
+      "path": "src/gca/config.py",
+      "accessCount": 4,
+      "lastAccessed": 1776317327367,
+      "type": "file"
+    },
+    {
+      "path": "src/gca/pipeline/embedder.py",
+      "accessCount": 4,
+      "lastAccessed": 1776317336079,
+      "type": "file"
+    },
+    {
+      "path": ".env",
+      "accessCount": 2,
+      "lastAccessed": 1776314574403,
+      "type": "file"
+    },
+    {
+      "path": "src/gca/pipeline/feature_extractor.py",
+      "accessCount": 2,
+      "lastAccessed": 1776317335826,
+      "type": "file"
+    },
+    {
+      "path": "src/gca/engine/similarity.py",
+      "accessCount": 2,
+      "lastAccessed": 1776317336451,
+      "type": "file"
+    },
+    {
+      "path": "docs/plan-status.md",
+      "accessCount": 1,
+      "lastAccessed": 1776294135450,
+      "type": "file"
+    },
+    {
+      "path": "tests/test_normalize.py",
+      "accessCount": 1,
+      "lastAccessed": 1776294140842,
+      "type": "file"
+    },
+    {
+      "path": "src/gca/collectors/steam.py",
+      "accessCount": 1,
+      "lastAccessed": 1776300795282,
+      "type": "file"
+    },
+    {
+      "path": "src/gca/pipeline/cache.py",
+      "accessCount": 1,
+      "lastAccessed": 1776314050628,
+      "type": "file"
+    },
+    {
+      "path": "src/gca/engine/weight_tuner.py",
+      "accessCount": 1,
+      "lastAccessed": 1776314063843,
+      "type": "file"
+    },
+    {
+      "path": "src/gca/db.py",
+      "accessCount": 1,
+      "lastAccessed": 1776317327401,
+      "type": "file"
+    },
+    {
+      "path": "src/gca/models.py",
+      "accessCount": 1,
+      "lastAccessed": 1776317327581,
+      "type": "file"
+    },
+    {
+      "path": "src/gca/logs.py",
+      "accessCount": 1,
+      "lastAccessed": 1776317327711,
+      "type": "file"
+    },
+    {
+      "path": "src/gca/pipeline",
+      "accessCount": 1,
+      "lastAccessed": 1776317331367,
+      "type": "directory"
+    },
+    {
+      "path": "src/gca/engine",
+      "accessCount": 1,
+      "lastAccessed": 1776317331704,
+      "type": "directory"
+    },
+    {
+      "path": "src/gca/collectors",
+      "accessCount": 1,
+      "lastAccessed": 1776317332120,
+      "type": "directory"
+    },
+    {
+      "path": "src/gca/report",
+      "accessCount": 1,
+      "lastAccessed": 1776317332551,
+      "type": "directory"
+    },
+    {
+      "path": "src/gca/api",
+      "accessCount": 1,
+      "lastAccessed": 1776317333146,
+      "type": "directory"
+    },
+    {
+      "path": "src/gca/pipeline/normalize.py",
+      "accessCount": 1,
+      "lastAccessed": 1776317335417,
+      "type": "file"
+    },
+    {
+      "path": "src/gca/report/weekly.py",
+      "accessCount": 1,
+      "lastAccessed": 1776317336681,
+      "type": "file"
+    },
+    {
+      "path": "src/gca/api/server.py",
+      "accessCount": 1,
+      "lastAccessed": 1776317336835,
+      "type": "file"
+    },
+    {
+      "path": "docs/not-done.md",
+      "accessCount": 1,
+      "lastAccessed": 1776317443036,
+      "type": "file"
+    },
+    {
+      "path": "docs/architecture.md",
+      "accessCount": 1,
+      "lastAccessed": 1776317571869,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}
