@@ -44,3 +44,22 @@ logs/
 # uv
 .uv/
 uv.lock
+
+# Terraform
+infra/**/.terraform/
+infra/**/.terraform.lock.hcl
+infra/**/terraform.tfvars
+infra/**/*.tfstate
+infra/**/*.tfstate.*
+infra/**/*.tfplan
+crash.log
+crash.*.log
+
+# Next.js
+web/.next/
+web/out/
+web/next-env.d.ts
+web/.vercel/
+
+# Generated report artifacts
+report_*.md

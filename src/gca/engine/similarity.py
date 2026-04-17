@@ -148,7 +148,22 @@ def compute_all(
         genre_str = g.get("genre") or "unknown"
         genre_embeds[g["id"]] = get_embedding(genre_str)
 
-    # Which base games need recomputation?
+    # Only games marked as "my game" act as bases for competitor search.
+    with connect() as conn:
+        my_ids = {
+            r["id"]
+            for r in conn.execute(
+                "SELECT id FROM games WHERE is_my_game = TRUE"
+            ).fetchall()
+        }
+    if not my_ids:
+        log.warning(
+            "No games flagged is_my_game=TRUE — nothing to compute. "
+            "Register targets via `gca add-my-game --platform steam --appid <id>`."
+        )
+        return 0
+    base_pool = [g for g in games if g["id"] in my_ids]
+
     if changed_only:
         with connect() as conn:
             existing = {
@@ -158,9 +173,9 @@ def compute_all(
                     [week_of],
                 ).fetchall()
             }
-        base_games = [g for g in games if g["id"] not in existing]
+        base_games = [g for g in base_pool if g["id"] not in existing]
     else:
-        base_games = games
+        base_games = base_pool
 
     total_written = 0
     for base in base_games:

@@ -41,9 +41,11 @@ CREATE TABLE IF NOT EXISTS games (
     title           TEXT,
     description     TEXT,
     raw_tags        TEXT[],
+    is_my_game      BOOLEAN NOT NULL DEFAULT FALSE,
     updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UNIQUE (platform, external_id)
 );
+CREATE INDEX IF NOT EXISTS idx_games_my ON games (is_my_game) WHERE is_my_game = TRUE;
 
 -- ============================================================
 -- Feature Store (SCD Type 2)

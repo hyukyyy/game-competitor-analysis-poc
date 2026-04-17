@@ -4,7 +4,7 @@ import datetime as dt
 import json
 from pathlib import Path
 
-import anthropic
+from openai import OpenAI
 from jinja2 import Environment, FileSystemLoader
 
 from ..config import Settings
@@ -107,14 +107,16 @@ def _llm_updates_summary(top_games: list[dict]) -> str:
     titles = "\n".join(f"- {g['title']} ({g['platform']})" for g in top_games[:10])
     prompt = f"Competitor games this week:\n{titles}\n\nSummarize notable recent updates for these titles."
     try:
-        client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
-        msg = client.messages.create(
+        client = OpenAI(api_key=settings.groq_api_key, base_url="https://api.groq.com/openai/v1")
+        msg = client.chat.completions.create(
             model=settings.llm_model,
             max_tokens=512,
-            system=_UPDATES_SYSTEM,
-            messages=[{"role": "user", "content": prompt}],
+            messages=[
+                {"role": "system", "content": _UPDATES_SYSTEM},
+                {"role": "user", "content": prompt},
+            ],
         )
-        return msg.content[0].text.strip()
+        return msg.choices[0].message.content.strip()
     except Exception as e:
         log.warning("LLM updates summary failed: %s", e)
         return "_Summary unavailable._"
@@ -176,10 +178,15 @@ def generate_and_save(base_game_id: int, week_of: dt.date, top_n: int = 10) -> s
 
 
 def generate_all(week_of: dt.date, top_n: int = 10) -> int:
-    """Generate reports for every game that has similarity data this week."""
+    """Generate reports for every 'my game' that has similarity data this week."""
     with connect() as conn:
         rows = conn.execute(
-            "SELECT DISTINCT base_game_id FROM game_similarities_weekly WHERE week_of = %s",
+            """
+            SELECT DISTINCT gsw.base_game_id
+            FROM game_similarities_weekly gsw
+            JOIN games g ON g.id = gsw.base_game_id
+            WHERE gsw.week_of = %s AND g.is_my_game = TRUE
+            """,
             [week_of],
         ).fetchall()
     count = 0

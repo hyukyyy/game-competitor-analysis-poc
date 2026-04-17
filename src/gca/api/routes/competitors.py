@@ -13,21 +13,26 @@ router = APIRouter()
 @router.get("/games")
 def list_games(
     platform: str | None = Query(None),
+    mine: bool = Query(False, description="Only return PM-registered 'my games'"),
     limit: int = Query(100, le=500),
     offset: int = Query(0),
 ) -> list[dict]:
-    """List normalized games, optionally filtered by platform."""
+    """List normalized games, optionally filtered by platform or 'my game' flag."""
+    clauses: list[str] = []
+    params: list = []
+    if platform:
+        clauses.append("platform = %s")
+        params.append(platform)
+    if mine:
+        clauses.append("is_my_game = TRUE")
+    where = f"WHERE {' AND '.join(clauses)}" if clauses else ""
+    params.extend([limit, offset])
+    sql = (
+        f"SELECT id, platform, external_id, title, is_my_game "
+        f"FROM games {where} ORDER BY is_my_game DESC, id LIMIT %s OFFSET %s"
+    )
     with connect() as conn:
-        if platform:
-            rows = conn.execute(
-                "SELECT id, platform, external_id, title FROM games WHERE platform = %s LIMIT %s OFFSET %s",
-                [platform, limit, offset],
-            ).fetchall()
-        else:
-            rows = conn.execute(
-                "SELECT id, platform, external_id, title FROM games LIMIT %s OFFSET %s",
-                [limit, offset],
-            ).fetchall()
+        rows = conn.execute(sql, params).fetchall()
     return [dict(r) for r in rows]
 
 

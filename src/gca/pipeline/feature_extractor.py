@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import re
 
-import anthropic
+from openai import OpenAI
 
 from ..config import Settings
 from ..db import connect
@@ -34,14 +34,17 @@ def extract_features_for_game(
     if cached is not None:
         return cached
 
-    client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
-    msg = client.messages.create(
+    client = OpenAI(api_key=settings.groq_api_key, base_url="https://api.groq.com/openai/v1")
+    msg = client.chat.completions.create(
         model=settings.llm_model,
         max_tokens=1024,
-        system=SYSTEM,
-        messages=[{"role": "user", "content": prompt}],
+        response_format={"type": "json_object"},
+        messages=[
+            {"role": "system", "content": SYSTEM},
+            {"role": "user", "content": prompt},
+        ],
     )
-    raw = msg.content[0].text.strip()
+    raw = msg.choices[0].message.content.strip()
     raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw, flags=re.MULTILINE).strip()
 
     try:

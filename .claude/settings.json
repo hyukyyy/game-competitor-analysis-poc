@@ -10,7 +10,18 @@
       "Bash(where py *)",
       "Bash(where conda *)",
       "Bash(where pip *)",
-      "Read(//c/Users/USER/**)"
+      "Read(//c/Users/USER/**)",
+      "Bash(py --version)",
+      "Bash(python -c \"import sys; print\\(sys.executable\\)\")",
+      "Bash(cmd.exe /c \"dir \\\\\"C:\\\\Program Files\\\\Docker\\\\\" 2>&1\")",
+      "Bash(cmd.exe /c \"docker ps 2>&1\")",
+      "Read(//mnt/c/**)",
+      "Bash(docker.exe ps *)",
+      "Bash(docker.exe --version)",
+      "Bash(cmd.exe /c \"systeminfo 2>&1 | findstr /i \\\\\"hyper-v virtualization\\\\\"\")",
+      "Bash(cmd.exe /c \"systeminfo\")",
+      "Bash(powershell.exe -Command \"Get-ComputerInfo | Select-Object -Property HyperV*,Processor*\")",
+      "Bash(wsl --version)"
     ]
   }
 }

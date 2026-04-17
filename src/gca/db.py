@@ -4,6 +4,7 @@ import contextlib
 from collections.abc import Iterator
 
 import psycopg
+from pgvector.psycopg import register_vector
 from psycopg.rows import dict_row
 
 from .config import settings
@@ -13,4 +14,5 @@ from .config import settings
 def connect() -> Iterator[psycopg.Connection]:
     """Short-lived Postgres connection with dict rows."""
     with psycopg.connect(settings.database_url, row_factory=dict_row) as conn:
+        register_vector(conn)
         yield conn

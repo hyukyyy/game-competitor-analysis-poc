@@ -15,8 +15,8 @@ class Settings(BaseSettings):
     database_url: str = Field(
         default="postgresql://postgres:postgres@localhost:5432/game_competitor"
     )
-    anthropic_api_key: str | None = None
-    llm_model: str = "claude-sonnet-4-6"
+    groq_api_key: str | None = None
+    llm_model: str = "llama-3.3-70b-versatile"
     embedding_model: str = "all-MiniLM-L6-v2"
     steam_api_key: str | None = None
     youtube_api_key: str | None = None
