@@ -21,28 +21,31 @@ export default async function GameCompetitorsPage({
 
   if (!data) {
     return (
-      <div className="mx-auto w-full max-w-5xl px-6 py-12">
-        <Link href="/" className="text-sm text-zinc-600 hover:underline">
-          &larr; My Games
-        </Link>
-        <div className="mt-8 rounded-lg border border-dashed border-zinc-300 bg-white p-12 text-center">
-          <h1 className="text-lg font-semibold text-zinc-900">
-            No similarity data yet
-          </h1>
-          <p className="mt-2 text-sm text-zinc-600">
-            Run{" "}
-            <code className="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs">
-              gca similarity
-            </code>{" "}
-            to compute competitors for this game.
-          </p>
+      <div className="flex flex-1 flex-col bg-zinc-50 font-sans">
+        <div className="mx-auto w-full max-w-5xl px-6 py-12">
+          <Link href="/" className="text-sm text-zinc-600 hover:underline">
+            &larr; My Games
+          </Link>
+          <div className="mt-8 rounded-lg border border-dashed border-zinc-300 bg-white p-12 text-center">
+            <h1 className="text-lg font-semibold text-zinc-900">
+              No similarity data yet
+            </h1>
+            <p className="mt-2 text-sm text-zinc-600">
+              Run{" "}
+              <code className="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs">
+                gca similarity
+              </code>{" "}
+              to compute competitors for this game.
+            </p>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-6 py-12">
+    <div className="flex flex-1 flex-col bg-zinc-50 font-sans">
+      <div className="mx-auto w-full max-w-6xl px-6 py-12">
       <Link href="/" className="text-sm text-zinc-600 hover:underline">
         &larr; My Games
       </Link>
@@ -71,6 +74,7 @@ export default async function GameCompetitorsPage({
         weekOf={data.week_of}
         competitors={data.competitors}
       />
+      </div>
     </div>
   );
 }

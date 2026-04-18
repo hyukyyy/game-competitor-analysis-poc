@@ -33,6 +33,21 @@ export type CompetitorsResponse = {
 
 export type FeedbackSignal = "upvote" | "downvote" | "clicked" | "added";
 
+export function storeUrl(platform: string, externalId: string): string | null {
+  switch (platform) {
+    case "steam":
+      return `https://store.steampowered.com/app/${externalId}/`;
+    case "appstore":
+      return `https://apps.apple.com/app/id${externalId}`;
+    case "playstore":
+      return `https://play.google.com/store/apps/details?id=${externalId}`;
+    case "itch":
+      return `https://itch.io/game/${externalId}`;
+    default:
+      return null;
+  }
+}
+
 async function jsonFetch<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
     ...init,
@@ -47,6 +62,12 @@ async function jsonFetch<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export const api = {
+  addMyGame: (body: { platform: string; appid: string }) =>
+    jsonFetch<Game>(`/games/my`, {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
+
   listGames: (opts: { platform?: string; mine?: boolean } = {}) => {
     const params = new URLSearchParams();
     if (opts.platform) params.set("platform", opts.platform);

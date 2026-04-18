@@ -4,10 +4,79 @@ import datetime as dt
 import json
 
 from fastapi import APIRouter, HTTPException, Query
+from pydantic import BaseModel
 
 from ...db import connect
 
 router = APIRouter()
+
+
+class AddMyGameIn(BaseModel):
+    platform: str = "steam"
+    appid: str
+
+
+@router.post("/games/my", status_code=201)
+def add_my_game(body: AddMyGameIn) -> dict:
+    """Register a game as 'my game' (PM analysis target).
+
+    Currently only Steam is supported. Fetches the game metadata from Steam,
+    normalizes it, and upserts into games with is_my_game=TRUE.
+    """
+    if body.platform != "steam":
+        raise HTTPException(
+            status_code=400,
+            detail=f"platform '{body.platform}' not yet supported; use 'steam'",
+        )
+
+    # Local imports so API startup doesn't pull heavy collector deps until needed.
+    from ...collectors.steam import SteamCollector, SteamCollectorError
+    from ...pipeline import normalize as normalize_mod
+
+    ext_id = str(body.appid).strip()
+    if not ext_id:
+        raise HTTPException(status_code=400, detail="appid is required")
+
+    try:
+        with SteamCollector() as c:
+            game = c.fetch_game(ext_id)
+    except SteamCollectorError as e:
+        raise HTTPException(status_code=404, detail=f"fetch failed: {e}")
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"collector error: {e}")
+
+    ng = normalize_mod.extract_normalized(body.platform, game.payload)
+    if not ng.external_id:
+        raise HTTPException(status_code=500, detail="could not normalize payload")
+
+    with connect() as conn, conn.cursor() as cur:
+        cur.execute(
+            """
+            INSERT INTO raw_games (platform, external_id, payload, collected_at)
+            VALUES (%s, %s, %s::jsonb, NOW())
+            ON CONFLICT DO NOTHING
+            """,
+            (game.platform, game.external_id, json.dumps(game.payload)),
+        )
+        cur.execute(
+            """
+            INSERT INTO games (platform, external_id, title, description, raw_tags,
+                               is_my_game, updated_at)
+            VALUES (%s, %s, %s, %s, %s, TRUE, NOW())
+            ON CONFLICT (platform, external_id) DO UPDATE SET
+                title = EXCLUDED.title,
+                description = EXCLUDED.description,
+                raw_tags = EXCLUDED.raw_tags,
+                is_my_game = TRUE,
+                updated_at = NOW()
+            RETURNING id, platform, external_id, title, is_my_game
+            """,
+            (ng.platform, ng.external_id, ng.title, ng.description, ng.raw_tags),
+        )
+        row = cur.fetchone()
+        conn.commit()
+
+    return dict(row)
 
 
 @router.get("/games")

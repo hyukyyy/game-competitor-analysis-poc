@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { api } from "@/lib/api";
+import { AddMyGameForm } from "./AddMyGameForm";
 
 export const dynamic = "force-dynamic";
 
@@ -22,6 +23,8 @@ export default async function Home() {
             {games.length} game{games.length === 1 ? "" : "s"}
           </span>
         </header>
+
+        <AddMyGameForm />
 
         {games.length === 0 ? (
           <div className="rounded-lg border border-dashed border-zinc-300 bg-white p-12 text-center">

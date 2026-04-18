@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { api, type Competitor, type FeedbackSignal } from "@/lib/api";
+import { api, storeUrl, type Competitor, type FeedbackSignal } from "@/lib/api";
 
 type FeedbackState = Record<number, { signal: FeedbackSignal; ts: number }>;
 
@@ -79,10 +79,31 @@ export function CompetitorsTable({
                     {c.rank}
                   </td>
                   <td className="px-4 py-3">
-                    <div className="font-medium text-zinc-900">{c.title}</div>
-                    <div className="font-mono text-xs text-zinc-500">
-                      {c.platform} · {c.external_id}
-                    </div>
+                    {(() => {
+                      const url = storeUrl(c.platform, c.external_id);
+                      const inner = (
+                        <>
+                          <div className="font-medium text-zinc-900 group-hover:text-indigo-600 group-hover:underline">
+                            {c.title}
+                          </div>
+                          <div className="font-mono text-xs text-zinc-500">
+                            {c.platform} · {c.external_id}
+                          </div>
+                        </>
+                      );
+                      return url ? (
+                        <a
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group block"
+                        >
+                          {inner}
+                        </a>
+                      ) : (
+                        inner
+                      );
+                    })()}
                   </td>
                   <td className="px-4 py-3 font-mono text-sm font-semibold tabular-nums text-zinc-900">
                     {c.similarity_score.toFixed(3)}
