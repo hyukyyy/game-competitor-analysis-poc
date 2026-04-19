@@ -9,10 +9,6 @@ terraform {
       source  = "vercel/vercel"
       version = "~> 2.0"
     }
-    postgresql = {
-      source  = "cyrilgdn/postgresql"
-      version = "~> 1.22"
-    }
     null = {
       source  = "hashicorp/null"
       version = "~> 3.2"
@@ -40,19 +36,7 @@ module "supabase" {
   region          = var.supabase_region
   db_password     = var.supabase_db_password
   schema_sql_path = var.schema_sql_path
-}
-
-# Postgres provider configured from the Supabase module output.
-provider "postgresql" {
-  alias           = "supabase"
-  host            = module.supabase.db_host
-  port            = module.supabase.db_port
-  database        = "postgres"
-  username        = "postgres"
-  password        = var.supabase_db_password
-  sslmode         = "require"
-  connect_timeout = 15
-  superuser       = false
+  python_bin      = var.python_bin
 }
 
 # ------------------------------------------------------------------

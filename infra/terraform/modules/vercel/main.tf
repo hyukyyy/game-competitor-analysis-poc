@@ -14,7 +14,7 @@ terraform {
 # ------------------------------------------------------------------
 resource "vercel_project" "api" {
   name      = "${var.project_name}-api"
-  framework = "other"
+  framework = "fastapi"
 
   git_repository = {
     type              = "github"

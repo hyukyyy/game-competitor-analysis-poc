@@ -3,11 +3,11 @@ output "project_ref" {
 }
 
 output "db_host" {
-  value = local.db_host
+  value = local.pooler_host
 }
 
 output "db_port" {
-  value = local.db_port
+  value = 5432
 }
 
 output "database_url" {

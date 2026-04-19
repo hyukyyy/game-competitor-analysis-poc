@@ -26,9 +26,9 @@ APPLICANT_NAME = "윤동혁"
 APPLICANT_POSITION = "AI 애플리케이션 엔지니어"
 SUBMISSION_DATE = "2026-04-21"
 
-# Replace after `terraform apply` and demo recording.
-PROTOTYPE_WEB_URL = "https://gca-web.vercel.app"      # placeholder
-PROTOTYPE_API_URL = "https://gca-api.vercel.app"      # placeholder
+# Populated after `terraform apply` + first Vercel deploy.
+PROTOTYPE_WEB_URL = "https://gca-web-tan.vercel.app"
+PROTOTYPE_API_URL = "https://gca-api.vercel.app"
 GITHUB_REPO_URL = "https://github.com/hyukyyy/game-competitor-analysis-poc"
 DEMO_GIF_URL = "docs/submission/demo.gif"             # user-recorded local file
 
@@ -174,7 +174,7 @@ def _draw_wireframe_home(slide, left, top, width, height):
     _wire_frame(slide, left, top, width, height)
     # URL bar
     add_text(slide, left + Inches(0.1), top + Inches(0.06), Inches(3), Inches(0.2),
-             "gca-web.vercel.app /", size=9, color=MUTE, font="Consolas")
+             "gca-web-tan.vercel.app /", size=9, color=MUTE, font="Consolas")
 
     inner_top = top + Inches(0.45)
     # Header
@@ -205,7 +205,7 @@ def _draw_wireframe_home(slide, left, top, width, height):
 def _draw_wireframe_competitors(slide, left, top, width, height):
     _wire_frame(slide, left, top, width, height)
     add_text(slide, left + Inches(0.1), top + Inches(0.06), Inches(4), Inches(0.2),
-             "gca-web.vercel.app / games / [id]", size=9, color=MUTE, font="Consolas")
+             "gca-web-tan.vercel.app / games / [id]", size=9, color=MUTE, font="Consolas")
 
     inner_top = top + Inches(0.45)
     # Base game banner
@@ -237,7 +237,7 @@ def _draw_wireframe_competitors(slide, left, top, width, height):
 def _draw_wireframe_report(slide, left, top, width, height):
     _wire_frame(slide, left, top, width, height)
     add_text(slide, left + Inches(0.1), top + Inches(0.06), Inches(4.5), Inches(0.2),
-             "gca-web.vercel.app / games / [id] / report", size=9, color=MUTE, font="Consolas")
+             "gca-web-tan.vercel.app / games / [id] / report", size=9, color=MUTE, font="Consolas")
 
     inner_top = top + Inches(0.45)
     # Header + Download PDF button

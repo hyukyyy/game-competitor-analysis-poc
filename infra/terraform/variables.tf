@@ -36,6 +36,12 @@ variable "schema_sql_path" {
   default     = "../../schema.sql"
 }
 
+variable "python_bin" {
+  description = "Python executable (with psycopg installed) used to apply schema."
+  type        = string
+  default     = "../../.venv/Scripts/python.exe"
+}
+
 # ------------------------------------------------------------------
 # Vercel
 # ------------------------------------------------------------------

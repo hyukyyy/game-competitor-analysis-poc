@@ -22,24 +22,27 @@ resource "supabase_project" "this" {
 }
 
 # ------------------------------------------------------------------
-# Schema application
+# Connection strings
 #
-# The Supabase provider does not expose a generic SQL-exec resource, so we
-# shell out to psql once the project is ready. This requires `psql` on the
-# host running `terraform apply`. The database password is passed via env
-# var to avoid echoing it to the command line.
+# Supabase deprecated direct IPv4 access on `db.<ref>.supabase.co` for free
+# tier — we use the session pooler on port 5432 (DDL-compatible) for schema
+# apply, and expose the same URL to serverless (Vercel) runtimes which also
+# lack IPv6 connectivity.
 # ------------------------------------------------------------------
 locals {
-  db_host      = "db.${supabase_project.this.id}.supabase.co"
-  db_port      = 5432
+  pooler_host  = "aws-1-${var.region}.pooler.supabase.com"
+  pooler_user  = "postgres.${supabase_project.this.id}"
   database_url = format(
-    "postgresql://postgres:%s@%s:%d/postgres?sslmode=require",
-    var.db_password,
-    local.db_host,
-    local.db_port,
+    "postgresql://%s:%s@%s:5432/postgres?sslmode=require",
+    local.pooler_user,
+    urlencode(var.db_password),
+    local.pooler_host,
   )
 }
 
+# ------------------------------------------------------------------
+# Schema application (Python + psycopg — no psql dependency).
+# ------------------------------------------------------------------
 resource "null_resource" "apply_schema" {
   triggers = {
     project_id  = supabase_project.this.id
@@ -50,21 +53,11 @@ resource "null_resource" "apply_schema" {
     interpreter = ["bash", "-c"]
     command     = <<-EOT
       set -euo pipefail
-      export PGPASSWORD="$DB_PASSWORD"
-      # Wait for the DB to accept connections (Supabase provisioning is async).
-      for i in $(seq 1 30); do
-        if psql -h "${local.db_host}" -U postgres -d postgres -c 'SELECT 1' >/dev/null 2>&1; then
-          break
-        fi
-        sleep 10
-      done
-      psql -h "${local.db_host}" -U postgres -d postgres -v ON_ERROR_STOP=1 \
-        -c 'CREATE EXTENSION IF NOT EXISTS vector;'
-      psql -h "${local.db_host}" -U postgres -d postgres -v ON_ERROR_STOP=1 \
-        -f "${var.schema_sql_path}"
+      "${var.python_bin}" "${path.module}/apply_schema.py" \
+        "${var.schema_sql_path}" "$DATABASE_URL"
     EOT
     environment = {
-      DB_PASSWORD = var.db_password
+      DATABASE_URL = local.database_url
     }
   }
 
