@@ -21,7 +21,13 @@
       "Bash(.venv/bin/python *)",
       "Bash(docker exec gca-pg *)",
       "Bash(.venv/bin/ruff check *)",
-      "Bash(.venv/bin/pytest *)"
+      "Bash(.venv/bin/pytest *)",
+      "Bash(python *)",
+      "Bash(python3 scripts/build_deck.py)",
+      "Read(//usr/bin/**)",
+      "Bash(/home/dyoon/codes/dyoon/game-competitor-analysis-poc/.venv/bin/python3 scripts/build_deck.py)",
+      "Bash(/home/dyoon/codes/dyoon/game-competitor-analysis-poc/.venv/bin/pip install *)",
+      "Bash(python3 *)"
     ]
   }
 }

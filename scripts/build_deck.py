@@ -208,7 +208,7 @@ def build(prs, page_total_provider):
     add_text(
         s, Inches(0.9), Inches(2.35), Inches(11.5), Inches(0.9),
         "PM 이 매주 수시간씩 수작업으로 하던 경쟁작 리서치를,\n"
-        "4축 유사도 엔진 + 주간 배치 + 내부 웹툴로 자동화했습니다.",
+        "4가지 기준의 유사도 분석 + 주간 자동 배치 + 내부 웹툴로 자동화했습니다.",
         size=20, bold=True, color=INK,
     )
     add_bullets(
@@ -236,7 +236,7 @@ def build(prs, page_total_provider):
         [
             "PM 이 매주 월요일 아침 수동으로 경쟁작 조사",
             "스토어 검색 → 장르·BM·리뷰 훑기 → 스프레드시트 정리",
-            "담당 게임 수 × 수 시간 → 월요일이 통째로 녹음",
+            "담당 게임 수 × 수 시간 → 월요일 업무 시간 대부분 소요",
             "조사 품질이 개인 경험에 의존 → 재현성·비교성 낮음",
             "일회성 메모로 끝나고 기관 기억으로 축적되지 않음",
         ],
@@ -264,17 +264,17 @@ def build(prs, page_total_provider):
     add_title(s, "성공은 이렇게 측정합니다", eyebrow="How We Measure Success")
     add_text(
         s, Inches(0.6), Inches(2.0), Inches(12.1), Inches(0.5),
-        "북극성 지표는 \"정확도\" 가 아니라 \"PM 리포트 준비 시간\" 입니다.",
+        "최종 목표는 \"정확도\" 가 아니라 \"PM 리포트 준비 시간 단축\" 입니다.",
         size=16, bold=True, color=INK,
     )
     add_bullets(
         s, Inches(0.6), Inches(2.8), Inches(12.1), Inches(3.5),
         [
-            "북극성: 주간 리포트 준비 시간  X → 1시간 이내",
-            "보조: Top 10 precision (gold set 대비) ≥ 0.6 — 후보 제시 수준이면 충분",
-            "보조: PM upvote rate ≥ 50% — 유용성의 implicit signal",
-            "품질: Feature self-consistency ≥ 90% — LLM 출력 안정성",
-            "신뢰성: End-to-end 주간 실행 성공률 ≥ 95%",
+            "최종 목표: 주간 리포트 준비 시간 X → 1시간 이내",
+            "보조: Top 10 precision ≥ 0.6 — 시스템이 제시한 Top 10 중 실제 경쟁작이 60% 이상",
+            "보조: PM upvote rate ≥ 50% — PM 이 리포트에 남긴 👍 비율이 절반 이상",
+            "품질: Feature self-consistency ≥ 90% — 같은 게임을 여러 번 분석해도 결과가 90% 일치",
+            "신뢰성: E2E 주간 실행 성공률 ≥ 95% — 수집→분석→리포트 전체 파이프라인 안정성",
         ],
         size=16,
     )
@@ -294,36 +294,48 @@ def build(prs, page_total_provider):
         size=14, color=BODY,
     )
 
-    # 4 axes table
-    col_x = [0.6, 4.2, 8.6, 11.2]
-    headers = ["축", "표현 방식", "가중치(초기)"]
+    # 4 axes table — 기술적 표현 + 쉬운 설명 병기
+    headers = ["축", "기술적 표현", "쉬운 설명", "가중치"]
     rows = [
-        ("Semantic", "description + review 임베딩 cosine", "0.40"),
-        ("Genre",    "LLM 추출 장르 임베딩 cosine (이진 X)", "0.25"),
-        ("Tier",     "log1p(review_count) 정규화 Gaussian", "0.20"),
-        ("BM",       "{gacha, ads, premium, sub} KL 대칭거리", "0.15"),
+        ("Semantic\n(콘텐츠)",
+         "desc + review embedding\ncosine similarity",
+         "게임 소개글과 유저 리뷰의\n내용이 얼마나 비슷한지",
+         "0.40"),
+        ("Genre\n(장르)",
+         "LLM 추출 장르 텍스트\nembedding cosine (연속값)",
+         "AI가 파악한 장르가\n얼마나 가까운지",
+         "0.25"),
+        ("Tier\n(규모)",
+         "log1p(review_count)\nGaussian kernel",
+         "리뷰 수 기준 게임 체급이\n비슷한지 (AAA vs 인디)",
+         "0.20"),
+        ("BM\n(수익모델)",
+         "{gacha, ads, premium, sub}\nsymmetric KL divergence",
+         "수익 모델 비율이\n얼마나 비슷한지",
+         "0.15"),
     ]
     head_top = Inches(2.7)
     add_rect(s, Inches(0.6), head_top, Inches(12.1), Inches(0.5), fill=ACCENT)
-    add_text(s, Inches(0.85), head_top + Emu(40000), Inches(3.0), Inches(0.4),
-             headers[0], size=12, bold=True, color=BG)
-    add_text(s, Inches(4.2),  head_top + Emu(40000), Inches(7.0), Inches(0.4),
-             headers[1], size=12, bold=True, color=BG)
-    add_text(s, Inches(11.2), head_top + Emu(40000), Inches(1.5), Inches(0.4),
-             headers[2], size=12, bold=True, color=BG)
+    hx = [0.85, 3.0, 6.6, 11.4]
+    hw = [2.0, 3.5, 4.7, 1.3]
+    for j, h in enumerate(headers):
+        add_text(s, Inches(hx[j]), head_top + Emu(40000), Inches(hw[j]), Inches(0.4),
+                 h, size=12, bold=True, color=BG)
 
-    row_h = 0.55
-    for i, (axis, expr, weight) in enumerate(rows):
+    row_h = 0.75
+    for i, (axis, tech, plain, weight) in enumerate(rows):
         y = 3.2 + i * row_h
         if i % 2 == 1:
             add_rect(s, Inches(0.6), Inches(y), Inches(12.1), Inches(row_h),
                      fill=RGBColor(0xF8, 0xFA, 0xFC))
-        add_text(s, Inches(0.85), Inches(y + 0.1), Inches(3.0), Inches(0.4),
-                 axis, size=13, bold=True, color=INK)
-        add_text(s, Inches(4.2), Inches(y + 0.1), Inches(7.0), Inches(0.4),
-                 expr, size=13, color=BODY)
-        add_text(s, Inches(11.2), Inches(y + 0.1), Inches(1.5), Inches(0.4),
-                 weight, size=13, bold=True, color=ACCENT)
+        add_text(s, Inches(0.85), Inches(y + 0.08), Inches(2.0), Inches(0.6),
+                 axis, size=12, bold=True, color=INK)
+        add_text(s, Inches(3.0), Inches(y + 0.08), Inches(3.5), Inches(0.6),
+                 tech, size=11, color=BODY, font="Consolas")
+        add_text(s, Inches(6.6), Inches(y + 0.08), Inches(4.7), Inches(0.6),
+                 plain, size=12, color=BODY)
+        add_text(s, Inches(11.4), Inches(y + 0.15), Inches(1.3), Inches(0.4),
+                 weight, size=14, bold=True, color=ACCENT)
 
     add_rect(s, Inches(0.6), Inches(5.9), Inches(12.1), Inches(1.05), fill=ACCENT_SOFT)
     add_text(
@@ -358,21 +370,19 @@ def build(prs, page_total_provider):
 
     # ---- 7. PM 사용 플로우 -------------------------------------------
     s = new_slide()
-    add_title(s, "PM 은 이렇게 씁니다 (5단계)", eyebrow="User Flow")
+    add_title(s, "PM 은 이렇게 씁니다 (4단계)", eyebrow="User Flow")
     steps = [
         ("1", "내 게임 등록",
-         "FE 에서 Steam AppID 입력 → DB 에 is_my_game=TRUE 플래그"),
-        ("2", "주간 배치 실행",
-         "파이프라인이 내 게임 base 로 Top N 유사도 + 리포트 생성"),
-        ("3", "내 게임 목록 확인",
+         "FE 에서 Steam AppID 입력 → DB 에 내 게임으로 등록"),
+        ("2", "내 게임 목록 확인",
          "홈 '/' 에서 내 게임 카드 그리드 + 각 카드 Competitors/Report 링크"),
-        ("4", "경쟁작 분석",
-         "'/games/<id>' 에서 Top 10 + component bar + 👍/👎 + 스토어 링크"),
-        ("5", "주간 리포트",
+        ("3", "경쟁작 분석",
+         "'/games/<id>' 에서 Top 10 + 유사도 상세 + 👍/👎 피드백 + 스토어 링크"),
+        ("4", "주간 리포트 열람",
          "'/games/<id>/report' 에서 표·신규진입·순위변동·업데이트 요약 + PDF 저장"),
     ]
     top = 2.1
-    row_h = 0.95
+    row_h = 1.05
     for i, (num, title, desc) in enumerate(steps):
         y = top + i * row_h
         add_rect(s, Inches(0.6), Inches(y), Inches(0.8), Inches(0.8),
@@ -383,6 +393,14 @@ def build(prs, page_total_provider):
                  title, size=16, bold=True, color=INK)
         add_text(s, Inches(1.6), Inches(y + 0.42), Inches(11), Inches(0.4),
                  desc, size=13, color=BODY)
+
+    # 배치 자동 실행 안내
+    add_rect(s, Inches(0.6), Inches(6.4), Inches(12.1), Inches(0.7), fill=ACCENT_SOFT)
+    add_text(
+        s, Inches(0.85), Inches(6.5), Inches(11.5), Inches(0.5),
+        "※ 경쟁작 분석 배치는 매주 일요일 저녁 자동 실행됩니다. PM 이 별도로 실행할 필요 없습니다.",
+        size=13, bold=True, color=ACCENT,
+    )
 
     # ---- 8. 데모 스크린샷 placeholders --------------------------------
     for title, subtitle in [
@@ -440,8 +458,8 @@ def build(prs, page_total_provider):
 
     add_text(
         s, Inches(0.6), Inches(5.7), Inches(12.1), Inches(1.2),
-        "HITL '검수·승인' 플로우는 의도적으로 제거.\n"
-        "검수를 '업무' 가 아닌 '데이터 생산' 으로 재정의 — PM 의 월요일을 되돌려줌.",
+        "Human-in-the-Loop 방식의 '검수·승인' 플로우는 의도적으로 제거.\n"
+        "피드백을 '업무' 가 아닌 '자연스러운 데이터 생산' 으로 재정의 — PM 의 월요일을 되돌려줌.",
         size=14, color=BODY,
     )
 
