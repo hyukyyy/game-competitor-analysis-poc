@@ -63,3 +63,4 @@ web/.vercel/
 
 # Generated report artifacts
 report_*.md
+.vercel
